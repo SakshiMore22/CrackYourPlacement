@@ -6,13 +6,10 @@ public:
             ans.push_back(a);
             return;
         }
-        if (targ<0){
+        if (targ<0 || ind==nums.size()){
             return;
         }
-        if (ind==nums.size()){
-            return;
-        }
-
+        
         helper(ind+1,nums,a,targ);
         a.push_back(nums[ind]);
         helper(ind,nums,a,targ-nums[ind]);
@@ -21,6 +18,7 @@ public:
 
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<int> a;
+        sort(candidates.begin(), candidates.end());
         helper(0,candidates,a,target);
         return ans;
     }
