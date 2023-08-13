@@ -1,28 +1,27 @@
 class Solution {
 public:
-    int dp[100000];
-    bool helper(int ind,vector<int>& nums){
+    bool helper(int ind,vector<int>& nums,vector<int>& dp){
         if(ind==nums.size()){
             return true;
         }
         if (dp[ind]!=-1){
             return dp[ind];
         }
-        bool tw=false;
+        bool ans=false;
         if(ind+1<nums.size() && nums[ind]==nums[ind+1]){
-            tw=helper(ind+2,nums);
+            ans|=helper(ind+2,nums,dp);
         }
-        bool thr=false;
         if(ind+2<nums.size() && nums[ind]==nums[ind+1] && nums[ind+1]==nums[ind+2]){
-            thr=helper(ind+3,nums);
+            ans|=helper(ind+3,nums,dp);
         }
         else if(ind+2<nums.size() && nums[ind+2]==nums[ind+1]+1 && nums[ind+1]==nums[ind]+1){
-            thr=helper(ind+3,nums);
+            ans|=helper(ind+3,nums,dp);
         }
-        return dp[ind]=tw || thr ;
+        
+        return dp[ind]=ans;
     }
     bool validPartition(vector<int>& nums) {
-        memset(dp,-1,sizeof(dp));
-        return helper(0,nums);
+        vector<int> dp(nums.size(),-1);
+        return helper(0,nums,dp);
     }
 };
